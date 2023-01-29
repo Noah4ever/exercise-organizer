@@ -1,14 +1,22 @@
-import React from "react";
+import { useState } from "react";
 import { FlatList, View } from "react-native";
-import { Text } from "@rneui/themed";
+import { Text, Button } from "@rneui/themed";
+import uuid from "react-native-uuid";
 
 // Components import
 import ExerciseItem from "./ExerciseItem";
+import ExerciseModal from "./ExerciseModal";
 
 // Styles
 import { GLOBAL_STYLES } from "../../styles/Style";
 
 export default function Exercises({ exerciseList, setExerciseList }) {
+  const [addExerciseVisible, setAddExerciseVisible] = useState(false);
+
+  function toggleAddExercise() {
+    setAddExerciseVisible(!addExerciseVisible);
+  }
+
   function deleteExercise(exerciseIndex) {
     setExerciseList((curExerciseList) => {
       if (exerciseIndex === null) {
@@ -56,6 +64,24 @@ export default function Exercises({ exerciseList, setExerciseList }) {
       <Text h1 style={GLOBAL_STYLES.h1}>
         Exercises
       </Text>
+      <Button
+        type="clear"
+        color={GLOBAL_STYLES.COLORS.foreground}
+        icon={{
+          name: "add-outline",
+          type: "ionicon",
+          color: GLOBAL_STYLES.COLORS.foreground,
+          size: 32,
+        }}
+        onPress={toggleAddExercise}
+      />
+      <ExerciseModal
+        visible={addExerciseVisible}
+        toggleOverlay={toggleAddExercise}
+        updateExercise={updateExercise}
+        exerciseIndex={null}
+        exercise={{ name: "", color: "random", icon: "" }}
+      />
       <FlatList
         data={exerciseList}
         renderItem={({ item, index }) => (
