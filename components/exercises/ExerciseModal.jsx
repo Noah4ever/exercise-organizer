@@ -129,7 +129,6 @@ export default function ExerciseModal({
             };
             toggleOverlay();
             updateExercise(exerciseIndex, newExercise);
-            // clear useRefs?
           }}
         />
       </View>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { ListItem, Text } from "@rneui/themed";
+import { ListItem, Button, Text } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 
 // Components import
@@ -15,13 +15,21 @@ export default function ExerciseItem({ exercise, exerciseIndex, updateExercise, 
     setExerciseModalVisible(!exerciseModalVisible);
   };
   return (
-    <ListItem
+    <ListItem.Swipeable
       key={exercise.id}
       containerStyle={{
         backgroundColor: GLOBAL_STYLES.COLORS.background1,
         paddingVertical: 10,
       }}
-      onPress={toggleOverlay}>
+      onPress={toggleOverlay}
+      rightContent={() => (
+        <Button
+          title="Delete"
+          onPress={() => deleteExercise(exerciseIndex)}
+          icon={{ name: "delete", color: "white" }}
+          buttonStyle={{ minHeight: "100%", backgroundColor: GLOBAL_STYLES.COLORS.danger }}
+        />
+      )}>
       <View
         style={{
           backgroundColor: exercise.color,
@@ -46,6 +54,6 @@ export default function ExerciseItem({ exercise, exerciseIndex, updateExercise, 
         visible={exerciseModalVisible}
         toggleOverlay={toggleOverlay}
       />
-    </ListItem>
+    </ListItem.Swipeable>
   );
 }
