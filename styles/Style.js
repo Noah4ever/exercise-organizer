@@ -1,11 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const COLORS = {
-  text: "#0F1012",
+  text: "#F2F7FF",
   textMuted: "#CDD0D4",
-  accent: "#cc704b",
+  accent: "#28a99e",
   danger: "#ed4a57",
   background: "#0F1012",
+  background1: "#1c1d21",
+  background2: "#27292e",
   foreground: "#F2F7FF",
 };
 
@@ -18,6 +20,8 @@ export const GLOBAL_STYLES = StyleSheet.create({
   h1: {
     fontSize: 24,
     color: COLORS.text,
+    textAlign: "left",
+    paddingStart: 8,
   },
   h2: {
     fontSize: 16,

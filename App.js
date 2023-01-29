@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
+import uuid from "react-native-uuid";
 import { TabView, Tab } from "@rneui/themed-edge";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -15,6 +16,28 @@ import { GLOBAL_STYLES } from "./styles/Style";
 
 export default function App() {
   const [tabIndex, setTabIndex] = useState(2);
+
+  const [exerciseList, setExerciseList] = useState([
+    {
+      name: "Pushup",
+      color: "#2f9fb4",
+      icon: "barbell-outline",
+      id: uuid.v4(),
+    },
+    {
+      name: "Pullup",
+      color: "#a690be",
+      icon: "barbell-outline",
+      id: uuid.v4(),
+    },
+    {
+      name: "Leg Raises",
+      color: "#7a4d4a",
+      icon: "barbell-outline",
+      id: uuid.v4(),
+    },
+  ]);
+
   return (
     <>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
@@ -29,7 +52,7 @@ export default function App() {
           <ExercisesGroups />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Exercises />
+          <Exercises exerciseList={exerciseList} setExerciseList={setExerciseList} />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <Workouts />
@@ -126,7 +149,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   activeTab: {
-    backgroundColor: "#ececec",
+    backgroundColor: GLOBAL_STYLES.COLORS.background,
     width: "100%",
   },
   TabItemTitle: {
@@ -135,7 +158,7 @@ const styles = StyleSheet.create({
     color: GLOBAL_STYLES.COLORS.text,
   },
   TabItemContainer: (active) => ({
-    backgroundColor: active ? "#efefef" : "white",
+    backgroundColor: active ? "#000" : GLOBAL_STYLES.COLORS.background,
     // elevation: 8,
     // borderRadius: 25,
   }),
