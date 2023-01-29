@@ -18,6 +18,7 @@ export default function App() {
   return (
     <>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
+
       <TabView
         value={tabIndex}
         onChange={setTabIndex}

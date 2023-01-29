@@ -1,6 +1,6 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text } from "@rneui/themed";
 
 export default function Analytics() {
-  return <Text>Analytics</Text>;
+  return <Text h1>Analytics</Text>;
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text } from "@rneui/themed";
 
 export default function Exercises() {
-  return <Text>Exercises</Text>;
+  return <Text h1>Exercises</Text>;
 }

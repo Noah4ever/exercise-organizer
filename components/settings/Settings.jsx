@@ -1,6 +1,6 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text } from "@rneui/themed";
 
 export default function Settings() {
-  return <Text>Settings</Text>;
+  return <Text h1>Settings</Text>;
 }
