@@ -1,37 +1,58 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { StyleSheet, View, Animated } from "react-native";
 import { Overlay, Input, Button, ListItem } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 import { GLOBAL_STYLES } from "../../styles/Style";
+import DropDownPicker from "react-native-dropdown-picker";
 import ColorPicker from "react-native-wheel-color-picker";
 import SlideUpContainer from "../utils/SlideUpContainer";
 
-export default function ExerciseModal({
+export default function ExerciseGroupModal({
   visible,
   toggleOverlay,
-  exercise,
-  exerciseIndex,
-  updateExercise,
-  deleteExercise,
+  updateExerciseGroup,
+  deleteExerciseGroup,
+  exerciseGroupIndex,
+  exerciseGroup,
+  exerciseList,
 }) {
   const [colorpickerVisible, setColorpickerVisible] = useState(false);
   const toggleColorpickerOverlay = () => {
     setColorpickerVisible(!colorpickerVisible);
   };
 
-  const exerciseColor = useRef(exercise.color);
-  const exerciseIcon = useRef(exercise.icon);
-  const exerciseName = useRef(exercise.name);
+  const exerciseGroupColor = useRef(exerciseGroup.color);
+  const exerciseGroupIcon = useRef(exerciseGroup.icon);
+  const exerciseGroupName = useRef(exerciseGroup.name);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownValue, setDropdownValue] = useState(exerciseGroup.list ?? []);
+  const [dropdownItems, setDropdownItems] = useState(
+    exerciseList.map((ex) => {
+      return { label: ex.name, value: ex.id };
+    })
+  );
 
   const [slideAnim] = useState(new Animated.Value(0));
-
-  React.useEffect(() => {
+  useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: visible ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
   }, [visible, slideAnim]);
+
+  useEffect(() => {
+    setDropdownValue(exerciseGroup.list);
+  }, [visible]);
+
+  useEffect(() => {
+    setDropdownItems(
+      exerciseList.map((ex) => {
+        return { label: ex.name, value: ex.id };
+      })
+    );
+  }, [exerciseList]);
 
   return (
     <SlideUpContainer visible={visible} toggleOverlay={toggleOverlay}>
@@ -69,11 +90,11 @@ export default function ExerciseModal({
                   marginBottom: -15,
                   paddingHorizontal: 0,
                 }}
-                defaultValue={exerciseName.current}
+                defaultValue={exerciseGroupName.current}
                 onChangeText={(input) => {
-                  exerciseName.current = input;
+                  exerciseGroupName.current = input;
                 }}
-                placeholder="Exercise Name"
+                placeholder="Exercise Group Name"
               />
             </ListItem.Content>
           </ListItem>
@@ -82,7 +103,7 @@ export default function ExerciseModal({
             <View
               style={{
                 borderRadius: 50,
-                backgroundColor: exerciseColor.current,
+                backgroundColor: exerciseGroupColor.current,
                 width: 32,
                 height: 32,
               }}
@@ -97,6 +118,48 @@ export default function ExerciseModal({
                   onPress={toggleColorpickerOverlay}
                 />
               </View>
+            </ListItem.Content>
+          </ListItem>
+
+          <ListItem containerStyle={styles.ListItemContainer}>
+            <ListItem.Content>
+              <DropDownPicker
+                multiple={true}
+                open={dropdownOpen}
+                value={dropdownValue}
+                items={dropdownItems}
+                setOpen={setDropdownOpen}
+                setValue={setDropdownValue}
+                setItems={setDropdownItems}
+                theme="DARK"
+                mode="BADGE"
+                placeholder="Select Exercises"
+                searchPlaceholder="Search Exercise List..."
+                searchable={true}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  minHeight: 50,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: GLOBAL_STYLES.COLORS.background,
+                  paddingHorizontal: 10,
+                  paddingVertical: 3,
+                  backgroundColor: GLOBAL_STYLES.COLORS.background1,
+                }}
+                dropDownContainerStyle={{
+                  position: "absolute",
+                  backgroundColor: GLOBAL_STYLES.COLORS.background1,
+                  borderRadius: 8,
+                  borderColor: GLOBAL_STYLES.COLORS.background,
+                  borderWidth: 1,
+                  width: "100%",
+                  overflow: "hidden",
+                  zIndex: 1000,
+                }}
+              />
             </ListItem.Content>
           </ListItem>
 
@@ -119,9 +182,9 @@ export default function ExerciseModal({
             >
               <ColorPicker
                 gapSize={4}
-                color={exerciseColor.current}
+                color={exerciseGroupColor.current}
                 onColorChangeComplete={(newColor) => {
-                  exerciseColor.current = newColor;
+                  exerciseGroupColor.current = newColor;
                 }}
               />
             </View>
@@ -135,37 +198,38 @@ export default function ExerciseModal({
           </Overlay>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          {/* ExerciseIndex is null when new exercise is created */}
-          {exerciseIndex !== null ? (
+          {/* ExerciseGroupIndex is null when new exercise is created */}
+          {exerciseGroupIndex !== null ? (
             <Button
               title={"Delete"}
               type="clear"
               containerStyle={{ marginTop: 10 }}
-              titleStyle={{ color: GLOBAL_STYLES.COLORS.danger }}
+              titleStyle={{ color: GLOBAL_STYLES.COLORS.danger, zIndex: 10 }}
               onPress={() => {
                 toggleOverlay();
-                if (exerciseIndex === null) {
+                if (exerciseGroupIndex === null) {
                   return;
                 }
-                deleteExercise(exerciseIndex);
+                deleteExerciseGroup(exerciseGroupIndex);
               }}
             />
           ) : (
             ""
           )}
           <Button
-            title={exerciseIndex === null ? "Add" : "Update"}
+            title={exerciseGroupIndex === null ? "Add" : "Update"}
             type="clear"
             containerStyle={{ marginTop: 10 }}
-            titleStyle={{ color: GLOBAL_STYLES.COLORS.accent }}
+            titleStyle={{ color: GLOBAL_STYLES.COLORS.accent, zIndex: 10 }}
             onPress={() => {
-              const newExercise = {
-                name: exerciseName.current,
-                color: exerciseColor.current,
-                icon: exerciseIcon.current,
+              const newExerciseGroup = {
+                name: exerciseGroupName.current,
+                color: exerciseGroupColor.current,
+                list: dropdownValue,
+                icon: exerciseGroupIcon.current,
               };
               toggleOverlay();
-              updateExercise(exerciseIndex, newExercise);
+              updateExerciseGroup(exerciseGroupIndex, newExerciseGroup);
             }}
           />
         </View>

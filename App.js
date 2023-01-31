@@ -5,7 +5,7 @@ import { TabView, Tab } from "@rneui/themed-edge";
 import { LinearGradient } from "expo-linear-gradient";
 
 // Components import
-import ExercisesGroups from "./components/exerciseGroups/ExercisesGroups";
+import ExerciseGroup from "./components/exerciseGroups/ExerciseGroups";
 import Exercises from "./components/exercises/Exercises";
 import Workouts from "./components/workouts/Workouts";
 import Analytics from "./components/analytics/Analytics";
@@ -15,8 +15,9 @@ import Settings from "./components/settings/Settings";
 import { GLOBAL_STYLES } from "./styles/Style";
 
 export default function App() {
-  const [tabIndex, setTabIndex] = useState(2);
+  const [tabIndex, setTabIndex] = useState(0);
 
+  const [exerciseGroups, setExerciseGroups] = useState([]);
   const [exerciseList, setExerciseList] = useState([
     {
       name: "Pushup",
@@ -47,12 +48,22 @@ export default function App() {
         onChange={setTabIndex}
         animationType="timing"
         disableSwipe={true}
-        animationConfig={{ duration: 175 }}>
+        animationConfig={{ duration: 175 }}
+      >
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <ExercisesGroups />
+          <ExerciseGroup
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
+            exerciseList={exerciseList}
+            setExerciseList={setExerciseList}
+          />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Exercises exerciseList={exerciseList} setExerciseList={setExerciseList} />
+          <Exercises
+            exerciseList={exerciseList}
+            setExerciseList={setExerciseList}
+            setExerciseGroup={setExerciseGroups}
+          />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <Workouts />
@@ -86,7 +97,8 @@ export default function App() {
           backgroundColor: GLOBAL_STYLES.COLORS.accent,
           height: 3,
         }}
-        variant="default">
+        variant="default"
+      >
         <Tab.Item
           // title="Exercise Groups"
           titleStyle={styles.TabItemTitle}

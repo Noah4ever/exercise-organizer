@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, LayoutAnimation } from "react-native";
 import { Text, Button } from "@rneui/themed";
 import uuid from "react-native-uuid";
 
@@ -10,20 +10,41 @@ import ExerciseModal from "./ExerciseModal";
 // Styles
 import { GLOBAL_STYLES } from "../../styles/Style";
 
-export default function Exercises({ exerciseList, setExerciseList }) {
+export default function Exercises({
+  exerciseList,
+  setExerciseList,
+  setExerciseGroup,
+}) {
   const [addExerciseVisible, setAddExerciseVisible] = useState(false);
 
   function toggleAddExercise() {
+    LayoutAnimation.configureNext({
+      update: {
+        type: "EaseOut",
+      },
+      duration: 250,
+    });
     setAddExerciseVisible(!addExerciseVisible);
   }
 
   function deleteExercise(exerciseIndex) {
+    const deleteExercise = exerciseList[exerciseIndex];
     setExerciseList((curExerciseList) => {
       if (exerciseIndex === null) {
         return;
       }
       curExerciseList.splice(exerciseIndex, 1);
       return [...curExerciseList];
+    });
+    setExerciseGroup((exerciseGroup) => {
+      exerciseGroup.forEach((group) => {
+        console.log("Group:", group);
+      });
+      const index = exerciseGroup.indexOf(deleteExercise.id);
+      if (index > -1) {
+        exerciseGroup.splice(index, 1);
+      }
+      return [...exerciseGroup];
     });
   }
 
@@ -48,7 +69,6 @@ export default function Exercises({ exerciseList, setExerciseList }) {
           icon: newExercise.icon,
           id: uuid.v4(),
         };
-        // console.log("NewExercise:", newExObj);
         curExeriseList.push(newExObj);
       } else {
         curExeriseList[exerciseIndex].name = newExercise.name;
@@ -77,13 +97,18 @@ export default function Exercises({ exerciseList, setExerciseList }) {
       />
       <ExerciseModal
         visible={addExerciseVisible}
-        toggleOverlay={toggleAddExercise}
         updateExercise={updateExercise}
+        toggleOverlay={toggleAddExercise}
         exerciseIndex={null}
-        exercise={{ name: "", color: "random", icon: "" }}
+        exercise={{
+          name: "",
+          color: GLOBAL_STYLES.COLORS.accent,
+          icon: "barbell-outline",
+        }}
       />
       <FlatList
         data={exerciseList}
+        ItemSeparatorComponent={<View style={{ height: 4 }} />}
         renderItem={({ item, index }) => (
           <ExerciseItem
             exercise={item}

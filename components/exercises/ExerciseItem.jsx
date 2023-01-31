@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { View, LayoutAnimation } from "react-native";
 import { ListItem, Button, Text } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -9,43 +9,70 @@ import ExerciseModal from "./ExerciseModal";
 // Styles
 import { GLOBAL_STYLES } from "../../styles/Style";
 
-export default function ExerciseItem({ exercise, exerciseIndex, updateExercise, deleteExercise }) {
+export default function ExerciseItem({
+  exercise,
+  exerciseIndex,
+  updateExercise,
+  deleteExercise,
+}) {
   const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
-  const toggleOverlay = () => {
+  function toggleOverlay() {
+    LayoutAnimation.configureNext({
+      update: {
+        type: "EaseOut",
+      },
+      duration: 250,
+    });
     setExerciseModalVisible(!exerciseModalVisible);
-  };
+  }
   return (
     <ListItem.Swipeable
       key={exercise.id}
       containerStyle={{
+        borderStartColor: exercise.color,
+        borderLeftWidth: 6,
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
         backgroundColor: GLOBAL_STYLES.COLORS.background1,
         paddingVertical: 10,
       }}
       onPress={toggleOverlay}
-      rightContent={() => (
+      rightContent={
         <Button
           title="Delete"
           onPress={() => deleteExercise(exerciseIndex)}
           icon={{ name: "delete", color: "white" }}
-          buttonStyle={{ minHeight: "100%", backgroundColor: GLOBAL_STYLES.COLORS.danger }}
+          containerStyle={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+          buttonStyle={{
+            minHeight: "100%",
+            backgroundColor: GLOBAL_STYLES.COLORS.danger,
+          }}
         />
-      )}>
-      <View
-        style={{
-          backgroundColor: exercise.color,
-          borderRadius: 50,
-          paddingLeft: 1.5,
-          justifyContent: "center",
-          alignItems: "center",
-          width: 32,
-          height: 32,
-        }}>
-        <Icon name={exercise.icon} size={15} color={GLOBAL_STYLES.COLORS.text} />
+      }
+    >
+      <View style={{ minWidth: 18 }}>
+        <Icon
+          name={exercise.icon}
+          size={18}
+          color={GLOBAL_STYLES.COLORS.text}
+        />
       </View>
       <ListItem.Content>
-        <ListItem.Title style={{ color: GLOBAL_STYLES.COLORS.text }}>{exercise.name}</ListItem.Title>
+        <ListItem.Title
+          style={{ color: GLOBAL_STYLES.COLORS.text, fontWeight: "bold" }}
+        >
+          {exercise.name}
+        </ListItem.Title>
       </ListItem.Content>
-      <Icon name="ellipsis-horizontal" size={24} color={GLOBAL_STYLES.COLORS.text} />
+      {/* <Icon
+        name="ellipsis-horizontal"
+        size={24}
+        color={GLOBAL_STYLES.COLORS.text}
+      /> */}
+      <ListItem.Chevron />
       <ExerciseModal
         exercise={exercise}
         exerciseIndex={exerciseIndex}

@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const COLORS = {
   text: "#F2F7FF",
-  textMuted: "#CDD0D4",
+  textMuted: "#abaeb3",
   accent: "#28a99e",
   danger: "#f52a3a",
   background: "#0F1012",
