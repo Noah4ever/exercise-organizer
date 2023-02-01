@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon, ListItem, Text } from "@rneui/themed";
 import { GLOBAL_STYLES } from "../../styles/Style";
+import ColorThemeSlideUp from "./ColorThemeSlideUp";
 
 export default function Settings() {
   const [slideUpColorThemeVisible, setSlideUpColorThemeVisible] =
@@ -43,6 +44,7 @@ export default function Settings() {
         </ListItem.Content>
         <ListItem.Chevron />
       </ListItem>
+      <ColorThemeSlideUp />
     </>
   );
 }
