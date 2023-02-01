@@ -6,12 +6,7 @@ import ExerciseGroupModal from "./ExerciseGroupModal";
 import uuid from "react-native-uuid";
 import ExerciseGroupItem from "./ExerciseGroupItem";
 
-export default function ExerciseGroups({
-  exerciseGroups,
-  setExerciseGroups,
-  exerciseList,
-  setExerciseList,
-}) {
+export default function ExerciseGroups({ exerciseGroups, setExerciseGroups, exerciseList, setExerciseList }) {
   const [exerciseGroupVisible, setExerciseGroupVisible] = useState(false);
 
   function toggleOverlay() {
@@ -35,8 +30,6 @@ export default function ExerciseGroups({
   }
 
   function updateExerciseGroup(exerciseGroupIndex, newExerciseGroup) {
-    console.log(newExerciseGroup.list);
-
     setExerciseGroups((curExerciseGroupList) => {
       // If current ExerciseList is empty
       if (!curExerciseGroupList || curExerciseGroupList.length <= 0) {

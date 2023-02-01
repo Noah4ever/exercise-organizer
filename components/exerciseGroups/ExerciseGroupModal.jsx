@@ -49,7 +49,11 @@ export default function ExerciseGroupModal({
   useEffect(() => {
     setDropdownItems(
       exerciseList.map((ex) => {
-        return { label: ex.name, value: ex.id };
+        return {
+          label: ex.name,
+          value: ex.id,
+          icon: () => <Icon name={ex.icon} size={18} color={GLOBAL_STYLES.COLORS.text} />,
+        };
       })
     );
   }, [exerciseList]);
@@ -62,21 +66,14 @@ export default function ExerciseGroupModal({
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-        }}
-      >
+        }}>
         <View>
           <View>
             <Button
               onPress={toggleOverlay}
               color={"transparent"}
               containerStyle={{ marginLeft: "85%" }}
-              icon={
-                <Icon
-                  name="close-outline"
-                  size={24}
-                  color={GLOBAL_STYLES.COLORS.textMuted}
-                />
-              }
+              icon={<Icon name="close-outline" size={24} color={GLOBAL_STYLES.COLORS.textMuted} />}
             />
           </View>
           <ListItem containerStyle={styles.ListItemContainer}>
@@ -106,8 +103,7 @@ export default function ExerciseGroupModal({
                 backgroundColor: exerciseGroupColor.current,
                 width: 32,
                 height: 32,
-              }}
-            ></View>
+              }}></View>
             <ListItem.Content>
               <View>
                 <Button
@@ -131,8 +127,14 @@ export default function ExerciseGroupModal({
                 setOpen={setDropdownOpen}
                 setValue={setDropdownValue}
                 setItems={setDropdownItems}
+                listMode="MODAL"
+                modalAnimationType="slide"
+                modalContentContainerStyle={{
+                  backgroundColor: GLOBAL_STYLES.COLORS.background2,
+                }}
                 theme="DARK"
                 mode="BADGE"
+                showBadgeDot={false}
                 placeholder="Select Exercises"
                 searchPlaceholder="Search Exercise List..."
                 searchable={true}
@@ -172,14 +174,12 @@ export default function ExerciseGroupModal({
               height: 400,
               padding: 25,
               backgroundColor: GLOBAL_STYLES.COLORS.background2,
-            }}
-          >
+            }}>
             <View
               style={{
                 marginTop: -30,
                 height: 300,
-              }}
-            >
+              }}>
               <ColorPicker
                 gapSize={4}
                 color={exerciseGroupColor.current}
