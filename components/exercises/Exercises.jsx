@@ -36,14 +36,14 @@ export default function Exercises({
       curExerciseList.splice(exerciseIndex, 1);
       return [...curExerciseList];
     });
+    // Delete exercise from exercise groups
     setExerciseGroup((exerciseGroup) => {
       exerciseGroup.forEach((group) => {
-        console.log("Group:", group);
+        const index = group.list.indexOf(deleteExercise.id);
+        if (index > -1) {
+          group.list.splice(index, 1);
+        }
       });
-      const index = exerciseGroup.indexOf(deleteExercise.id);
-      if (index > -1) {
-        exerciseGroup.splice(index, 1);
-      }
       return [...exerciseGroup];
     });
   }
