@@ -4,8 +4,7 @@ import { GLOBAL_STYLES } from "../../styles/Style";
 import ColorThemeSlideUp from "./ColorThemeSlideUp";
 
 export default function Settings() {
-  const [slideUpColorThemeVisible, setSlideUpColorThemeVisible] =
-    useState(false);
+  const [slideUpColorThemeVisible, setSlideUpColorThemeVisible] = useState(false);
 
   return (
     <>
@@ -13,38 +12,22 @@ export default function Settings() {
         Settings
       </Text>
 
-      <ListItem
-        containerStyle={{ backgroundColor: GLOBAL_STYLES.COLORS.background1 }}
-      >
-        <Icon
-          name="trash-outline"
-          type="ionicon"
-          color={GLOBAL_STYLES.COLORS.text}
-        />
+      <ListItem containerStyle={{ backgroundColor: GLOBAL_STYLES.COLORS.background1 }}>
+        <Icon name="trash-outline" type="ionicon" color={GLOBAL_STYLES.COLORS.text} />
         <ListItem.Content>
-          <ListItem.Title style={{ color: GLOBAL_STYLES.COLORS.text }}>
-            Clear Data
-          </ListItem.Title>
+          <ListItem.Title style={{ color: GLOBAL_STYLES.COLORS.text }}>Clear Data</ListItem.Title>
         </ListItem.Content>
         <ListItem.Chevron />
       </ListItem>
 
-      <ListItem
-        containerStyle={{ backgroundColor: GLOBAL_STYLES.COLORS.background1 }}
-      >
-        <Icon
-          name="color-palette-outline"
-          type="ionicon"
-          color={GLOBAL_STYLES.COLORS.text}
-        />
+      <ListItem containerStyle={{ backgroundColor: GLOBAL_STYLES.COLORS.background1 }}>
+        <Icon name="color-palette-outline" type="ionicon" color={GLOBAL_STYLES.COLORS.text} />
         <ListItem.Content>
-          <ListItem.Title style={{ color: GLOBAL_STYLES.COLORS.text }}>
-            Color Theme
-          </ListItem.Title>
+          <ListItem.Title style={{ color: GLOBAL_STYLES.COLORS.text }}>Color Theme</ListItem.Title>
         </ListItem.Content>
         <ListItem.Chevron />
       </ListItem>
-      <ColorThemeSlideUp />
+      {/* <ColorThemeSlideUp /> */}
     </>
   );
 }

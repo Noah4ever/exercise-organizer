@@ -37,6 +37,18 @@ export default function App() {
       icon: "barbell-outline",
       id: uuid.v4(),
     },
+    {
+      name: "Butterflies",
+      color: "#32a3fa",
+      icon: "barbell-outline",
+      id: uuid.v4(),
+    },
+    {
+      name: "Dips",
+      color: "#756135",
+      icon: "barbell-outline",
+      id: uuid.v4(),
+    },
   ]);
 
   return (
@@ -48,8 +60,7 @@ export default function App() {
         onChange={setTabIndex}
         animationType="timing"
         disableSwipe={true}
-        animationConfig={{ duration: 175 }}
-      >
+        animationConfig={{ duration: 175 }}>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <ExerciseGroup
             exerciseGroups={exerciseGroups}
@@ -97,8 +108,7 @@ export default function App() {
           backgroundColor: GLOBAL_STYLES.COLORS.accent,
           height: 3,
         }}
-        variant="default"
-      >
+        variant="default">
         <Tab.Item
           // title="Exercise Groups"
           titleStyle={styles.TabItemTitle}
