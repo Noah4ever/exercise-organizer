@@ -17,7 +17,7 @@ import { GLOBAL_STYLES, useTheme } from "./styles/Style";
 export default function App() {
   const [theme, setTheme] = useState("light");
   const themeProvider = useTheme(theme);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(4);
 
   const [exerciseGroups, setExerciseGroups] = useState([]);
   const [exerciseList, setExerciseList] = useState([
@@ -102,7 +102,7 @@ export default function App() {
           <Analytics themeProvider={themeProvider} />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Settings themeProvider={themeProvider} />
+          <Settings themeProvider={themeProvider} setTheme={setTheme} />
         </TabView.Item>
       </TabView>
 

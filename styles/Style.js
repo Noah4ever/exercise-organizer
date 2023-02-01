@@ -11,8 +11,9 @@ const COLORS = {
   foreground: "#F2F7FF",
 };
 
-export const ColorThemes = {
-  dark: {
+export const ColorThemes = [
+  {
+    id: "dark",
     name: "Dark",
     dropdownTheme: "DARK",
     text: "#F2F7FF",
@@ -23,7 +24,8 @@ export const ColorThemes = {
     background1: "#1c1d21",
     background2: "#27292e",
   },
-  light: {
+  {
+    id: "light",
     name: "Light",
     dropdownTheme: "LIGHT",
     text: "#0F1012",
@@ -34,10 +36,10 @@ export const ColorThemes = {
     background1: "#e3e2de",
     background2: "#d8d6d1",
   },
-};
+];
 
 export function useTheme(theme) {
-  return ColorThemes[theme] ?? ColorThemes.dark;
+  return ColorThemes[ColorThemes.indexOf(ColorThemes.find((ct) => ct.id === theme))] ?? ColorThemes[0];
 }
 
 export const GLOBAL_STYLES = StyleSheet.create({

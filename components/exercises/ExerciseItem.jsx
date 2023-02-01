@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, LayoutAnimation } from "react-native";
+import { View, LayoutAnimation, Dimensions } from "react-native";
 import { ListItem, Button, Text } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -23,6 +23,7 @@ export default function ExerciseItem({ themeProvider, exercise, exerciseIndex, u
   return (
     <ListItem.Swipeable
       key={exercise.id}
+      minSlideWidth={Dimensions.get("window").width / 4}
       containerStyle={{
         borderStartColor: exercise.color,
         borderLeftWidth: 6,
