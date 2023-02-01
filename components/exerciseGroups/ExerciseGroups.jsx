@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { FlatList, View, LayoutAnimation } from "react-native";
 import { Text, Button } from "@rneui/themed";
-import { GLOBAL_STYLES } from "../../styles/Style";
+import { GLOBAL_STYLES, useTheme } from "../../styles/Style";
 import ExerciseGroupModal from "./ExerciseGroupModal";
 import uuid from "react-native-uuid";
 import ExerciseGroupItem from "./ExerciseGroupItem";
 
-export default function ExerciseGroups({ exerciseGroups, setExerciseGroups, exerciseList, setExerciseList }) {
+export default function ExerciseGroups({
+  themeProvider,
+  exerciseGroups,
+  setExerciseGroups,
+  exerciseList,
+  setExerciseList,
+}) {
   const [exerciseGroupVisible, setExerciseGroupVisible] = useState(false);
 
   function toggleOverlay() {
@@ -65,21 +71,22 @@ export default function ExerciseGroups({ exerciseGroups, setExerciseGroups, exer
 
   return (
     <>
-      <Text h1 style={GLOBAL_STYLES.h1}>
+      <Text h1 style={[GLOBAL_STYLES.h1, { color: themeProvider.text }]}>
         ExercisesGroups
       </Text>
       <Button
         type="clear"
-        color={GLOBAL_STYLES.COLORS.foreground}
+        color={themeProvider.text}
         icon={{
           name: "add-outline",
           type: "ionicon",
-          color: GLOBAL_STYLES.COLORS.foreground,
+          color: themeProvider.text,
           size: 32,
         }}
         onPress={toggleOverlay}
       />
       <ExerciseGroupModal
+        themeProvider={themeProvider}
         visible={exerciseGroupVisible}
         toggleOverlay={toggleOverlay}
         updateExerciseGroup={updateExerciseGroup}
@@ -88,7 +95,7 @@ export default function ExerciseGroups({ exerciseGroups, setExerciseGroups, exer
         exerciseList={exerciseList}
         exerciseGroup={{
           name: "",
-          color: GLOBAL_STYLES.COLORS.accent,
+          color: themeProvider.accent,
           list: [],
           icon: "",
         }}
@@ -99,6 +106,7 @@ export default function ExerciseGroups({ exerciseGroups, setExerciseGroups, exer
           ItemSeparatorComponent={<View style={{ height: 4 }} />}
           renderItem={({ item, index }) => (
             <ExerciseGroupItem
+              themeProvider={themeProvider}
               exerciseGroup={item}
               exerciseGroupIndex={index}
               updateExerciseGroup={updateExerciseGroup}

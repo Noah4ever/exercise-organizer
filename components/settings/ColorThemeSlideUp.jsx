@@ -5,8 +5,8 @@ import { GLOBAL_STYLES } from "../../styles/Style";
 
 export default function ColorThemeSlideUp() {
   return (
-    <SlideUpContainer>
-      <Text style={{ color: GLOBAL_STYLES.COLORS.text }}>HALLO</Text>
-    </SlideUpContainer>
+    // <SlideUpContainer>
+    <Text style={{ color: GLOBAL_STYLES.COLORS.text }}>HALLO</Text>
+    // </SlideUpContainer>
   );
 }

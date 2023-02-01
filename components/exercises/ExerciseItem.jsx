@@ -9,12 +9,7 @@ import ExerciseModal from "./ExerciseModal";
 // Styles
 import { GLOBAL_STYLES } from "../../styles/Style";
 
-export default function ExerciseItem({
-  exercise,
-  exerciseIndex,
-  updateExercise,
-  deleteExercise,
-}) {
+export default function ExerciseItem({ themeProvider, exercise, exerciseIndex, updateExercise, deleteExercise }) {
   const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
   function toggleOverlay() {
     LayoutAnimation.configureNext({
@@ -33,8 +28,9 @@ export default function ExerciseItem({
         borderLeftWidth: 6,
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
-        backgroundColor: GLOBAL_STYLES.COLORS.background1,
+        backgroundColor: themeProvider.background1,
         paddingVertical: 10,
+        marginLeft: 5,
       }}
       onPress={toggleOverlay}
       rightContent={
@@ -48,32 +44,20 @@ export default function ExerciseItem({
           }}
           buttonStyle={{
             minHeight: "100%",
-            backgroundColor: GLOBAL_STYLES.COLORS.danger,
+            backgroundColor: themeProvider.danger,
           }}
         />
-      }
-    >
+      }>
       <View style={{ minWidth: 18 }}>
-        <Icon
-          name={exercise.icon}
-          size={18}
-          color={GLOBAL_STYLES.COLORS.text}
-        />
+        <Icon name={exercise.icon} size={18} color={themeProvider.text} />
       </View>
       <ListItem.Content>
-        <ListItem.Title
-          style={{ color: GLOBAL_STYLES.COLORS.text, fontWeight: "bold" }}
-        >
-          {exercise.name}
-        </ListItem.Title>
+        <ListItem.Title style={{ color: themeProvider.text, fontWeight: "bold" }}>{exercise.name}</ListItem.Title>
       </ListItem.Content>
-      {/* <Icon
-        name="ellipsis-horizontal"
-        size={24}
-        color={GLOBAL_STYLES.COLORS.text}
-      /> */}
       <ListItem.Chevron />
+
       <ExerciseModal
+        themeProvider={themeProvider}
         exercise={exercise}
         exerciseIndex={exerciseIndex}
         updateExercise={updateExercise}

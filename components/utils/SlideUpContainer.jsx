@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, Animated } from "react-native";
+import { Animated } from "react-native";
 import { Overlay } from "@rneui/themed";
-import { GLOBAL_STYLES } from "../../styles/Style";
 
-export default function SlideUpContainer({ visible, toggleOverlay, children }) {
+export default function SlideUpContainer({ themeProvider, visible, toggleOverlay, children }) {
   const [slideAnim] = useState(new Animated.Value(0));
 
   React.useEffect(() => {
@@ -35,9 +34,8 @@ export default function SlideUpContainer({ visible, toggleOverlay, children }) {
         borderTopStartRadius: 25,
         borderBottomEndRadius: 0,
         borderBottomStartRadius: 0,
-        backgroundColor: GLOBAL_STYLES.COLORS.background2,
-      }}
-    >
+        backgroundColor: themeProvider.background2,
+      }}>
       {children}
     </Overlay>
   );

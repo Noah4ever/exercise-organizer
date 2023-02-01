@@ -7,6 +7,7 @@ import ColorPicker from "react-native-wheel-color-picker";
 import SlideUpContainer from "../utils/SlideUpContainer";
 
 export default function ExerciseModal({
+  themeProvider,
   visible,
   toggleOverlay,
   exercise,
@@ -33,36 +34,36 @@ export default function ExerciseModal({
     }).start();
   }, [visible, slideAnim]);
 
+  const styles = StyleSheet.create({
+    ListItemContainer: {
+      backgroundColor: themeProvider.background2,
+      paddingVertical: 10,
+    },
+  });
+
   return (
-    <SlideUpContainer visible={visible} toggleOverlay={toggleOverlay}>
+    <SlideUpContainer themeProvider={themeProvider} visible={visible} toggleOverlay={toggleOverlay}>
       <View
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-        }}
-      >
+        }}>
         <View>
           <View>
             <Button
               onPress={toggleOverlay}
               color={"transparent"}
               containerStyle={{ marginLeft: "85%" }}
-              icon={
-                <Icon
-                  name="close-outline"
-                  size={24}
-                  color={GLOBAL_STYLES.COLORS.textMuted}
-                />
-              }
+              icon={<Icon name="close-outline" size={24} color={themeProvider.textMuted} />}
             />
           </View>
           <ListItem containerStyle={styles.ListItemContainer}>
             <ListItem.Content>
               <Input
                 inputStyle={{
-                  color: GLOBAL_STYLES.COLORS.text,
+                  color: themeProvider.text,
                 }}
                 containerStyle={{
                   marginTop: 0,
@@ -85,15 +86,14 @@ export default function ExerciseModal({
                 backgroundColor: exerciseColor.current,
                 width: 32,
                 height: 32,
-              }}
-            ></View>
+              }}></View>
             <ListItem.Content>
               <View>
                 <Button
                   title={"Change color"}
                   type="clear"
                   containerStyle={{}}
-                  titleStyle={{ color: GLOBAL_STYLES.COLORS.text }}
+                  titleStyle={{ color: themeProvider.text }}
                   onPress={toggleColorpickerOverlay}
                 />
               </View>
@@ -108,15 +108,13 @@ export default function ExerciseModal({
               width: 300,
               height: 400,
               padding: 25,
-              backgroundColor: GLOBAL_STYLES.COLORS.background2,
-            }}
-          >
+              backgroundColor: themeProvider.background2,
+            }}>
             <View
               style={{
                 marginTop: -30,
                 height: 300,
-              }}
-            >
+              }}>
               <ColorPicker
                 gapSize={4}
                 color={exerciseColor.current}
@@ -128,7 +126,7 @@ export default function ExerciseModal({
             <Button
               title="Save color"
               type="clear"
-              titleStyle={{ color: GLOBAL_STYLES.COLORS.accent }}
+              titleStyle={{ color: themeProvider.accent }}
               containerStyle={{ marginTop: 25 }}
               onPress={toggleColorpickerOverlay}
             />
@@ -141,7 +139,7 @@ export default function ExerciseModal({
               title={"Delete"}
               type="clear"
               containerStyle={{ marginTop: 10 }}
-              titleStyle={{ color: GLOBAL_STYLES.COLORS.danger }}
+              titleStyle={{ color: themeProvider.danger }}
               onPress={() => {
                 toggleOverlay();
                 if (exerciseIndex === null) {
@@ -157,7 +155,7 @@ export default function ExerciseModal({
             title={exerciseIndex === null ? "Add" : "Update"}
             type="clear"
             containerStyle={{ marginTop: 10 }}
-            titleStyle={{ color: GLOBAL_STYLES.COLORS.accent }}
+            titleStyle={{ color: themeProvider.accent }}
             onPress={() => {
               const newExercise = {
                 name: exerciseName.current,
@@ -173,10 +171,3 @@ export default function ExerciseModal({
     </SlideUpContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  ListItemContainer: {
-    backgroundColor: GLOBAL_STYLES.COLORS.background2,
-    paddingVertical: 10,
-  },
-});

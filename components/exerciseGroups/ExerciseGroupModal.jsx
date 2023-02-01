@@ -8,6 +8,7 @@ import ColorPicker from "react-native-wheel-color-picker";
 import SlideUpContainer from "../utils/SlideUpContainer";
 
 export default function ExerciseGroupModal({
+  themeProvider,
   visible,
   toggleOverlay,
   updateExerciseGroup,
@@ -52,14 +53,21 @@ export default function ExerciseGroupModal({
         return {
           label: ex.name,
           value: ex.id,
-          icon: () => <Icon name={ex.icon} size={18} color={GLOBAL_STYLES.COLORS.text} />,
+          icon: () => <Icon name={ex.icon} size={18} color={themeProvider.text} />,
         };
       })
     );
   }, [exerciseList]);
 
+  const styles = StyleSheet.create({
+    ListItemContainer: {
+      backgroundColor: themeProvider.background2,
+      paddingVertical: 10,
+    },
+  });
+
   return (
-    <SlideUpContainer visible={visible} toggleOverlay={toggleOverlay}>
+    <SlideUpContainer themeProvider={themeProvider} visible={visible} toggleOverlay={toggleOverlay}>
       <View
         style={{
           display: "flex",
@@ -73,14 +81,14 @@ export default function ExerciseGroupModal({
               onPress={toggleOverlay}
               color={"transparent"}
               containerStyle={{ marginLeft: "85%" }}
-              icon={<Icon name="close-outline" size={24} color={GLOBAL_STYLES.COLORS.textMuted} />}
+              icon={<Icon name="close-outline" size={24} color={themeProvider.textMuted} />}
             />
           </View>
           <ListItem containerStyle={styles.ListItemContainer}>
             <ListItem.Content>
               <Input
                 inputStyle={{
-                  color: GLOBAL_STYLES.COLORS.text,
+                  color: themeProvider.text,
                 }}
                 containerStyle={{
                   marginTop: 0,
@@ -110,7 +118,7 @@ export default function ExerciseGroupModal({
                   title={"Change color"}
                   type="clear"
                   containerStyle={{}}
-                  titleStyle={{ color: GLOBAL_STYLES.COLORS.text }}
+                  titleStyle={{ color: themeProvider.text }}
                   onPress={toggleColorpickerOverlay}
                 />
               </View>
@@ -130,9 +138,9 @@ export default function ExerciseGroupModal({
                 listMode="MODAL"
                 modalAnimationType="slide"
                 modalContentContainerStyle={{
-                  backgroundColor: GLOBAL_STYLES.COLORS.background2,
+                  backgroundColor: themeProvider.background2,
                 }}
-                theme="DARK"
+                theme={themeProvider.dropdownTheme}
                 mode="BADGE"
                 showBadgeDot={false}
                 placeholder="Select Exercises"
@@ -146,16 +154,16 @@ export default function ExerciseGroupModal({
                   minHeight: 50,
                   borderRadius: 8,
                   borderWidth: 1,
-                  borderColor: GLOBAL_STYLES.COLORS.background,
+                  borderColor: themeProvider.background,
                   paddingHorizontal: 10,
                   paddingVertical: 3,
-                  backgroundColor: GLOBAL_STYLES.COLORS.background1,
+                  backgroundColor: themeProvider.background1,
                 }}
                 dropDownContainerStyle={{
                   position: "absolute",
-                  backgroundColor: GLOBAL_STYLES.COLORS.background1,
+                  backgroundColor: themeProvider.background1,
                   borderRadius: 8,
-                  borderColor: GLOBAL_STYLES.COLORS.background,
+                  borderColor: themeProvider.background,
                   borderWidth: 1,
                   width: "100%",
                   overflow: "hidden",
@@ -173,7 +181,7 @@ export default function ExerciseGroupModal({
               width: 300,
               height: 400,
               padding: 25,
-              backgroundColor: GLOBAL_STYLES.COLORS.background2,
+              backgroundColor: themeProvider.background2,
             }}>
             <View
               style={{
@@ -191,7 +199,7 @@ export default function ExerciseGroupModal({
             <Button
               title="Save color"
               type="clear"
-              titleStyle={{ color: GLOBAL_STYLES.COLORS.accent }}
+              titleStyle={{ color: themeProvider.accent }}
               containerStyle={{ marginTop: 25 }}
               onPress={toggleColorpickerOverlay}
             />
@@ -204,7 +212,7 @@ export default function ExerciseGroupModal({
               title={"Delete"}
               type="clear"
               containerStyle={{ marginTop: 10 }}
-              titleStyle={{ color: GLOBAL_STYLES.COLORS.danger, zIndex: 10 }}
+              titleStyle={{ color: themeProvider.danger, zIndex: 10 }}
               onPress={() => {
                 toggleOverlay();
                 if (exerciseGroupIndex === null) {
@@ -220,7 +228,7 @@ export default function ExerciseGroupModal({
             title={exerciseGroupIndex === null ? "Add" : "Update"}
             type="clear"
             containerStyle={{ marginTop: 10 }}
-            titleStyle={{ color: GLOBAL_STYLES.COLORS.accent, zIndex: 10 }}
+            titleStyle={{ color: themeProvider.accent, zIndex: 10 }}
             onPress={() => {
               const newExerciseGroup = {
                 name: exerciseGroupName.current,
@@ -237,10 +245,3 @@ export default function ExerciseGroupModal({
     </SlideUpContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  ListItemContainer: {
-    backgroundColor: GLOBAL_STYLES.COLORS.background2,
-    paddingVertical: 10,
-  },
-});

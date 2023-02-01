@@ -10,11 +10,7 @@ import ExerciseModal from "./ExerciseModal";
 // Styles
 import { GLOBAL_STYLES } from "../../styles/Style";
 
-export default function Exercises({
-  exerciseList,
-  setExerciseList,
-  setExerciseGroup,
-}) {
+export default function Exercises({ themeProvider, exerciseList, setExerciseList, setExerciseGroup }) {
   const [addExerciseVisible, setAddExerciseVisible] = useState(false);
 
   function toggleAddExercise() {
@@ -81,28 +77,29 @@ export default function Exercises({
 
   return (
     <View>
-      <Text h1 style={GLOBAL_STYLES.h1}>
+      <Text h1 style={[GLOBAL_STYLES.h1, { color: themeProvider.text }]}>
         Exercises
       </Text>
       <Button
         type="clear"
-        color={GLOBAL_STYLES.COLORS.foreground}
+        color={themeProvider.text}
         icon={{
           name: "add-outline",
           type: "ionicon",
-          color: GLOBAL_STYLES.COLORS.foreground,
+          color: themeProvider.text,
           size: 32,
         }}
         onPress={toggleAddExercise}
       />
       <ExerciseModal
+        themeProvider={themeProvider}
         visible={addExerciseVisible}
         updateExercise={updateExercise}
         toggleOverlay={toggleAddExercise}
         exerciseIndex={null}
         exercise={{
           name: "",
-          color: GLOBAL_STYLES.COLORS.accent,
+          color: themeProvider.accent,
           icon: "barbell-outline",
         }}
       />
@@ -111,6 +108,7 @@ export default function Exercises({
         ItemSeparatorComponent={<View style={{ height: 4 }} />}
         renderItem={({ item, index }) => (
           <ExerciseItem
+            themeProvider={themeProvider}
             exercise={item}
             exerciseIndex={index}
             updateExercise={updateExercise}

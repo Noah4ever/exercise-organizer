@@ -12,9 +12,11 @@ import Analytics from "./components/analytics/Analytics";
 import Settings from "./components/settings/Settings";
 
 // Styles
-import { GLOBAL_STYLES } from "./styles/Style";
+import { GLOBAL_STYLES, useTheme } from "./styles/Style";
 
 export default function App() {
+  const [theme, setTheme] = useState("light");
+  const themeProvider = useTheme(theme);
   const [tabIndex, setTabIndex] = useState(0);
 
   const [exerciseGroups, setExerciseGroups] = useState([]);
@@ -51,6 +53,21 @@ export default function App() {
     },
   ]);
 
+  const styles = StyleSheet.create({
+    activeTab: {
+      backgroundColor: themeProvider.background,
+      width: "100%",
+    },
+    TabItemTitle: {
+      paddingVertical: 12,
+      fontSize: 12,
+      color: themeProvider.text,
+    },
+    TabItemContainer: (active) => ({
+      backgroundColor: active ? themeProvider.background2 : themeProvider.background,
+    }),
+  });
+
   return (
     <>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
@@ -63,6 +80,7 @@ export default function App() {
         animationConfig={{ duration: 175 }}>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <ExerciseGroup
+            themeProvider={themeProvider}
             exerciseGroups={exerciseGroups}
             setExerciseGroups={setExerciseGroups}
             exerciseList={exerciseList}
@@ -71,19 +89,20 @@ export default function App() {
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <Exercises
+            themeProvider={themeProvider}
             exerciseList={exerciseList}
             setExerciseList={setExerciseList}
             setExerciseGroup={setExerciseGroups}
           />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Workouts />
+          <Workouts themeProvider={themeProvider} />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Analytics />
+          <Analytics themeProvider={themeProvider} />
         </TabView.Item>
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
-          <Settings />
+          <Settings themeProvider={themeProvider} />
         </TabView.Item>
       </TabView>
 
@@ -105,7 +124,7 @@ export default function App() {
           backgroundColor: "white",
         }}
         indicatorStyle={{
-          backgroundColor: GLOBAL_STYLES.COLORS.accent,
+          backgroundColor: themeProvider.accent,
           height: 3,
         }}
         variant="default">
@@ -117,7 +136,7 @@ export default function App() {
           icon={{
             name: "folder-open-outline",
             type: "ionicon",
-            color: GLOBAL_STYLES.COLORS.text,
+            color: themeProvider.text,
           }}
         />
         <Tab.Item
@@ -128,7 +147,7 @@ export default function App() {
           icon={{
             name: "list-outline",
             type: "ionicon",
-            color: GLOBAL_STYLES.COLORS.text,
+            color: themeProvider.text,
           }}
         />
         <Tab.Item
@@ -139,7 +158,7 @@ export default function App() {
           icon={{
             name: "barbell-outline",
             type: "ionicon",
-            color: GLOBAL_STYLES.COLORS.text,
+            color: themeProvider.text,
           }}
         />
         <Tab.Item
@@ -150,7 +169,7 @@ export default function App() {
           icon={{
             name: "bar-chart-outline",
             type: "ionicon",
-            color: GLOBAL_STYLES.COLORS.text,
+            color: themeProvider.text,
           }}
         />
         <Tab.Item
@@ -161,27 +180,10 @@ export default function App() {
           icon={{
             name: "cog-outline",
             type: "ionicon",
-            color: GLOBAL_STYLES.COLORS.text,
+            color: themeProvider.text,
           }}
         />
       </Tab>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  activeTab: {
-    backgroundColor: GLOBAL_STYLES.COLORS.background,
-    width: "100%",
-  },
-  TabItemTitle: {
-    paddingVertical: 12,
-    fontSize: 12,
-    color: GLOBAL_STYLES.COLORS.text,
-  },
-  TabItemContainer: (active) => ({
-    backgroundColor: active ? "#000" : GLOBAL_STYLES.COLORS.background,
-    // elevation: 8,
-    // borderRadius: 25,
-  }),
-});
