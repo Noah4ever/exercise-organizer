@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const COLORS = {
+  id: "dark",
+  name: "Dark",
+  dropdownTheme: "DARK",
   text: "#F2F7FF",
   textMuted: "#abaeb3",
   accent: "#28a99e",
@@ -8,7 +11,6 @@ const COLORS = {
   background: "#0F1012",
   background1: "#1c1d21",
   background2: "#27292e",
-  foreground: "#F2F7FF",
 };
 
 export const ColorThemes = [
@@ -29,8 +31,8 @@ export const ColorThemes = [
     name: "Light",
     dropdownTheme: "LIGHT",
     text: "#0F1012",
-    textMuted: "#CDD0D4",
-    accent: "#e5ad28",
+    textMuted: "#abaeb3",
+    accent: "#28a99e",
     danger: "#f52a3a",
     background: "#f0efed",
     background1: "#e3e2de",
