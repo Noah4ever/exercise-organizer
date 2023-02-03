@@ -15,7 +15,7 @@ import Settings from "./components/settings/Settings";
 import { GLOBAL_STYLES, useTheme } from "./styles/Style";
 
 export default function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const themeProvider = useTheme(theme);
   const [tabIndex, setTabIndex] = useState(4);
 
@@ -64,7 +64,9 @@ export default function App() {
       color: themeProvider.text,
     },
     TabItemContainer: (active) => ({
-      backgroundColor: active ? themeProvider.background2 : themeProvider.background,
+      backgroundColor: active
+        ? themeProvider.background2
+        : themeProvider.background,
     }),
   });
 
@@ -77,7 +79,8 @@ export default function App() {
         onChange={setTabIndex}
         animationType="timing"
         disableSwipe={true}
-        animationConfig={{ duration: 175 }}>
+        animationConfig={{ duration: 175 }}
+      >
         <TabView.Item style={[styles.activeTab, GLOBAL_STYLES.pageContainer]}>
           <ExerciseGroup
             themeProvider={themeProvider}
@@ -127,7 +130,8 @@ export default function App() {
           backgroundColor: themeProvider.accent,
           height: 3,
         }}
-        variant="default">
+        variant="default"
+      >
         <Tab.Item
           // title="Exercise Groups"
           titleStyle={styles.TabItemTitle}

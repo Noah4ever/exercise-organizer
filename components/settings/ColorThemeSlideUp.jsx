@@ -4,10 +4,16 @@ import { Text } from "@rneui/themed";
 import SlideUpContainer from "../utils/SlideUpContainer";
 import { ColorThemes, GLOBAL_STYLES } from "../../styles/Style";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Divider } from "@rneui/base";
 
-export default function ColorThemeSlideUp({ themeProvider, visible, toggleSlideUp, setTheme }) {
+export default function ColorThemeSlideUp({
+  themeProvider,
+  visible,
+  toggleSlideUp,
+  setTheme,
+}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [dropdownValue, setDropdownValue] = useState({ label: "Light", value: "light" });
+  const [dropdownValue, setDropdownValue] = useState(themeProvider.id);
   const [dropdownItems, setDropdownItems] = useState(
     ColorThemes.map((ex) => {
       return { label: ex.name, value: ex.id };
@@ -15,9 +21,15 @@ export default function ColorThemeSlideUp({ themeProvider, visible, toggleSlideU
   );
 
   return (
-    <SlideUpContainer themeProvider={themeProvider} visible={visible} toggleOverlay={toggleSlideUp}>
-      <View>
-        <Text style={{ color: themeProvider.text }}>Select Color Theme: </Text>
+    <SlideUpContainer
+      themeProvider={themeProvider}
+      visible={visible}
+      toggleOverlay={toggleSlideUp}
+    >
+      <View style={{ marginVertical: 10, marginHorizontal: 10 }}>
+        <Text style={{ color: themeProvider.text, marginBottom: 6 }}>
+          Select Color Theme:{" "}
+        </Text>
         <DropDownPicker
           open={dropdownOpen}
           value={dropdownValue}
