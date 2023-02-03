@@ -17,7 +17,7 @@ import { GLOBAL_STYLES, useTheme } from "./styles/Style";
 export default function App() {
   const [theme, setTheme] = useState("dark");
   const themeProvider = useTheme(theme);
-  const [tabIndex, setTabIndex] = useState(4);
+  const [tabIndex, setTabIndex] = useState(3);
 
   const [exerciseGroups, setExerciseGroups] = useState([]);
   const [exerciseList, setExerciseList] = useState([
